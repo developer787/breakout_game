@@ -11,22 +11,14 @@ class Rectangle extends React.Component {
     this.context = this.props.context
     this.x = this.props.x
     this.ch = this.props.ch
-    //this.y = this.props.y
     this.width = this.props.width
     this.height = this.props.height
-    this.rightPressed = this.props.rightPressed
-    /* this.end = this.props.end
-    this.clockwise = this.props.clockwise */
-
+    this.kb = this.props.kb
     }
 
   draw() {
-    if(this.rightPressed) {
-      this.x += 7
-    }
-    else if(this.leftPressed) {
-      this.x -= 7
-    }
+    
+    
     const ctx = this.context
     // Hexadecimal Color Red
     ctx.beginPath()
@@ -40,8 +32,15 @@ class Rectangle extends React.Component {
     }
 
   move(){
-    this.x++
-    this.y += 2
+    if(this.kb) {
+      if(this.kb.rightPressed) {
+      this.x += 7
+    }
+    else if(this.kb.leftPressed) {
+      this.x -= 7
+    }
+    }
+    
     return this
   }
 }

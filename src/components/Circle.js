@@ -25,7 +25,6 @@ class Circle extends React.Component {
 
 
   }
-
   draw() {
     if(this.x + this.dx > this.cw - this.radius || this.x + this.dx < this.radius) {
       this.dx = -this.dx

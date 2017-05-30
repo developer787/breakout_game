@@ -1,6 +1,7 @@
 import React from 'react'
 import Circle from './Circle'
 import Square from './Rectangle'
+import Config from './Config'
 
 
 
@@ -8,71 +9,62 @@ class Canvas extends React.Component {
   componentDidMount() {
     this.updateCanvas()
   }
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.updateCanvas()
   }
   updateCanvas() {
-    const audio = new (window.AudioContext || window.webkitAudioContext)()
-    const ctx = this.refs.canvas.getContext('2d')
     const canvas = this.refs.canvas
-    const mouse = new MouseEvent(canvas)
-    const vw = canvas.width  = window.innerWidth
-    const vh = canvas.height = window.innerHeight
-    canvas.addEventListener("keydown", keyDownHandler, false);
-    canvas.addEventListener("keyup", keyUpHandler, false);
-    let rightPressed = false
-    let leftPressed = false
-    const ballRadius = 20
-    const paddleHeight = 10
-    const paddleWidth = 75
-    const paddleX = (vw - paddleWidth) / 2
-    const paddle_props = {
-      rightPressed: rightPressed,
-      leftPressed: leftPressed,
-      width: paddleWidth, 
-      height: paddleHeight,
-      x: paddleX,
-      context: ctx,
-      ch: vh
-    }
+    const config = new Config(canvas)
+    config.init()
+    const ctx = config.result.ctx
+    const audio = config.result.audio
+    console.log(config.result)
+    const cw = config.result.width
+    const ch = config.result.height
+    const radius = 20
+    // const setResolution = new HiRes({canvas: config.canvas, ctx: config.ctx})
+    // setResolution.init()
+    
+    // can.style.width = w + "px";
+    // can.style.height = h + "px";
+
+      //const mouse = new MouseEvent(canvas)
+    
+    
+    // const ballRadius = 20
+    // const paddleHeight = 10
+    // const paddleWidth = 75
+    // const paddleX = (vw - paddleWidth) / 2
+    // const paddle_props = {
+    //   kb: keyboard,
+    //   width: paddleWidth,
+    //   height: paddleHeight,
+    //   x: paddleX,
+    //   context: config.ctx,
+    //   audio: config.audio,
+    //   ch: vh
+    // }
     const bola_props = {
-      x: vw / 2,
-      y: vh -30,
+      x: ch / 2,
+      y: cw - 30,
       dx: 2,
       dy: -10,
-      ch: vh,
-      cw: vw,
+      ch: ch,
+      cw: cw,
       context: ctx,
-      radius: ballRadius
+      audio: audio,
+      radius: radius
     }
+    
     const bola = new Circle(bola_props)
-    const paddle = new Square(paddle_props)
-    function keyDownHandler(e) {
-      let rightPressed = false
-      let leftPressed = false
-    if(e.keyCode == 39) {
-        rightPressed = true;
-    }
-    else if(e.keyCode == 37) {
-        leftPressed = true;
-    }
-}
+    // const paddle = new Square(paddle_props)
 
-function keyUpHandler(e) {
-  let rightPressed = false
-  let leftPressed = false
-    if(e.keyCode == 39) {
-        rightPressed = false;
-    }
-    else if(e.keyCode == 37) {
-        leftPressed = false;
-    }
-}
     requestAnimationFrame(function gameLoop() {
-      ctx.clearRect(0, 0, vw, vh)
-      // Start drawing
+      ctx.clearRect(0, 0, cw, ch)
+      //   // Start drawing
+      
       bola.draw().move()
-      paddle.draw()
+      // paddle.draw().move()
 
       // End Drawing
       requestAnimationFrame(gameLoop)
@@ -86,9 +78,10 @@ function keyUpHandler(e) {
 }
 
 
-function randomIntFromRange(min,max) {
+function randomIntFromRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
 function randomColor(colors) {
   return colors[Math.floor(Math.random() * colors.length)]
 }
