@@ -18,7 +18,6 @@ class Canvas extends React.Component {
     config.init()
     const ctx = config.result.ctx
     const audio = config.result.audio
-    console.log(config.result)
     const cw = config.result.width
     const ch = config.result.height
     const radius = 20
@@ -47,8 +46,8 @@ class Canvas extends React.Component {
     const bola_props = {
       x: ch / 2,
       y: cw - 30,
-      dx: 2,
-      dy: -10,
+      dx: 4,
+      dy: -5,
       ch: ch,
       cw: cw,
       context: ctx,
