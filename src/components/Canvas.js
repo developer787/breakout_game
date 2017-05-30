@@ -1,7 +1,7 @@
 import React from 'react'
 import Circle from './Circle'
 import Square from './Rectangle'
-import KbEvent from '../inputs/Keyboard'
+import Config from './Config'
 
 
 
@@ -9,50 +9,62 @@ class Canvas extends React.Component {
   componentDidMount() {
     this.updateCanvas()
   }
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.updateCanvas()
   }
   updateCanvas() {
-    const audio = new (window.AudioContext || window.webkitAudioContext)()
-    const ctx = this.refs.canvas.getContext('2d')
     const canvas = this.refs.canvas
-    //const mouse = new MouseEvent(canvas)
-    const keyboard = new KbEvent(canvas)
-    keyboard.keyDownHandler().keyUpHandler()
-    const vw = canvas.width  = window.innerWidth
-    const vh = canvas.height = window.innerHeight
-    const ballRadius = 20
-    const paddleHeight = 10
-    const paddleWidth = 75
-    const paddleX = (vw - paddleWidth) / 2
-    const paddle_props = {
-      kb: keyboard,
-      width: paddleWidth, 
-      height: paddleHeight,
-      x: paddleX,
-      context: ctx,
-      audio: audio,
-      ch: vh
-    }
+    const config = new Config(canvas)
+    config.init()
+    const ctx = config.result.ctx
+    const audio = config.result.audio
+    console.log(config.result)
+    const cw = config.result.width
+    const ch = config.result.height
+    const radius = 20
+    // const setResolution = new HiRes({canvas: config.canvas, ctx: config.ctx})
+    // setResolution.init()
+    
+    // can.style.width = w + "px";
+    // can.style.height = h + "px";
+
+      //const mouse = new MouseEvent(canvas)
+    
+    
+    // const ballRadius = 20
+    // const paddleHeight = 10
+    // const paddleWidth = 75
+    // const paddleX = (vw - paddleWidth) / 2
+    // const paddle_props = {
+    //   kb: keyboard,
+    //   width: paddleWidth,
+    //   height: paddleHeight,
+    //   x: paddleX,
+    //   context: config.ctx,
+    //   audio: config.audio,
+    //   ch: vh
+    // }
     const bola_props = {
-      x: vw / 2,
-      y: vh -30,
+      x: ch / 2,
+      y: cw - 30,
       dx: 2,
       dy: -10,
-      ch: vh,
-      cw: vw,
+      ch: ch,
+      cw: cw,
       context: ctx,
       audio: audio,
-      radius: ballRadius
+      radius: radius
     }
+    
     const bola = new Circle(bola_props)
-    const paddle = new Square(paddle_props)
+    // const paddle = new Square(paddle_props)
 
     requestAnimationFrame(function gameLoop() {
-      ctx.clearRect(0, 0, vw, vh)
-      // Start drawing
+      ctx.clearRect(0, 0, cw, ch)
+      //   // Start drawing
+      
       bola.draw().move()
-      paddle.draw().move()
+      // paddle.draw().move()
 
       // End Drawing
       requestAnimationFrame(gameLoop)
@@ -66,9 +78,10 @@ class Canvas extends React.Component {
 }
 
 
-function randomIntFromRange(min,max) {
+function randomIntFromRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
 function randomColor(colors) {
   return colors[Math.floor(Math.random() * colors.length)]
 }
