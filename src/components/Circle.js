@@ -22,6 +22,8 @@ class Circle extends React.Component {
     this.cw = this.props.cw
     this.gravity = 1
     this.friction = 0.99
+    
+
 
 
   }
@@ -31,6 +33,9 @@ class Circle extends React.Component {
     }
     if(this.y + this.dy > this.ch - this.radius || this.y + this.dy < this.radius) {
       this.dy = -this.dy
+    }
+    if(this.cw > this.x && this.cw < this.x + this.width) {
+        this.dy = -this.dy;
     }
 
     // if (this.y +this.radius + this.dy > this.ch){
