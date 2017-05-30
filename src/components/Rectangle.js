@@ -8,6 +8,7 @@ class Rectangle extends React.Component {
   constructor(props) {
         super(props)
     log(props)
+    this.y = this.props.y
     this.context = this.props.context
     this.x = this.props.x
     this.ch = this.props.ch
@@ -24,7 +25,7 @@ class Rectangle extends React.Component {
     ctx.beginPath()
     ctx.save()
     ctx.fillStyle="#FF0000";
-    ctx.rect(this.x, this.ch - this.height, this.width, this.height)
+    ctx.rect(this.x, this.y, this.width, this.height)
     ctx.fill()
     ctx.restore()
     ctx.closePath()

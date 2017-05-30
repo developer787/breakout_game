@@ -25,7 +25,8 @@ class Config extends React.Component {
       ctx: ctx,
       audio: audio,
       width: width,
-      height: height
+      height: height,
+      keyboard: keyboard
     }
   }
 }
