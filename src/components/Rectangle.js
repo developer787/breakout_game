@@ -7,11 +7,13 @@ import React from 'react'
 class Rectangle extends React.Component {
   constructor(props) {
         super(props)
-    log(props)
+    this.paddleX = this.props.paddleX
+    this.paddleWidth = this.props.paddleWidth
     this.y = this.props.y
     this.context = this.props.context
     this.x = this.props.x
     this.ch = this.props.ch
+    this.cw = this.props.cw
     this.width = this.props.width
     this.height = this.props.height
     this.kb = this.props.kb
@@ -34,10 +36,10 @@ class Rectangle extends React.Component {
 
   move(){
     if(this.kb) {
-      if(this.kb.rightPressed) {
+      if(this.kb.rightPressed && this.x < this.cw - this.width) {
       this.x += 7
     }
-    else if(this.kb.leftPressed) {
+    else if(this.kb.leftPressed && this.x > 0) {
       this.x -= 7
     }
     }

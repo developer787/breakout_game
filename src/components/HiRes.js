@@ -18,12 +18,13 @@ class HiRes extends React.Component {
 
       return dpr / bsr;
     })();
+    
     if (PIXEL_RATIO >= 2) {
       const vw = canvas.width = window.innerWidth * PIXEL_RATIO
       const vh = canvas.height = window.innerHeight * PIXEL_RATIO
       canvas.style.width = (vw / PIXEL_RATIO) + "px"
       canvas.style.height = (vh / PIXEL_RATIO) + "px"
-      ctx.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
+      //ctx.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0)
       this.result = {
         width: vw,
         height: vh

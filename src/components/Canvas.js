@@ -21,7 +21,7 @@ class Canvas extends React.Component {
     const keyboard = config.result.keyboard
     const cw = config.result.width
     const ch = config.result.height
-    const radius = 40
+    const radius = 20
     // const setResolution = new HiRes({canvas: config.canvas, ctx: config.ctx})
     // setResolution.init()
     
@@ -42,13 +42,16 @@ class Canvas extends React.Component {
       height: paddleHeight,
       x: paddleX,
       y: paddleY,
+      ch: ch,
+      cw: cw,
       context: ctx,
       audio: audio,
       ch: ch
     }
+    const paddle = new Square(paddle_props)
     const bola_props = {
       x: cw / 2,
-      y: ch - 50,
+      y: ch - 100,
       dx: 4,
       dy: -5,
       ch: ch,
@@ -59,7 +62,8 @@ class Canvas extends React.Component {
     }
     
     const bola = new Circle(bola_props)
-    const paddle = new Square(paddle_props)
+    
+    
 
     requestAnimationFrame(function gameLoop() {
       ctx.clearRect(0, 0, cw, ch)
@@ -67,6 +71,8 @@ class Canvas extends React.Component {
       
       bola.draw().move()
       paddle.draw().move()
+      detectCollision(bola, paddle)
+      
 
       // End Drawing
       requestAnimationFrame(gameLoop)
@@ -86,5 +92,22 @@ function randomIntFromRange(min, max) {
 
 function randomColor(colors) {
   return colors[Math.floor(Math.random() * colors.length)]
+}
+function detectCollision(obj1, obj2){
+      if (obj1.x + obj1.dx > obj1.cw - obj1.radius || obj1.x + obj1.dx < obj1.radius) {
+      obj1.dx = -obj1.dx
+      console.log('side hit')
+    }
+    if (obj1.y + obj1.dy < obj1.radius /*|| obj1.y + obj1.dy > obj1.ch - obj1.radius*/ ) {
+      obj1.dy = -obj1.dy
+      console.log('top hit')
+    } else if(obj1.y > obj1.ch - obj1.radius - obj2.height - (60 - obj2.height) &&
+		obj1.y < obj1.ch - obj1.radius &&
+		obj1.x + obj1.radius > obj2.x && obj2.x - obj1.radius < obj2.x + obj2.width) {
+            obj1.dy = -obj1.dy;
+    } else if(obj1.y + obj1.dy > obj1.ch - obj1.radius){
+      console.log("Game Over")
+      obj1.y == 200
+    }
 }
 export default Canvas
