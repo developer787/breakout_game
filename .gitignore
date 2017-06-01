@@ -9,6 +9,9 @@
 # production
 /build
 
+#VIM
+*.swp
+
 # misc
 .DS_Store
 .env

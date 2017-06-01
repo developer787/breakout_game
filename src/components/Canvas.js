@@ -22,16 +22,6 @@ class Canvas extends React.Component {
     const cw = config.result.width
     const ch = config.result.height
     const radius = 20
-    // const setResolution = new HiRes({canvas: config.canvas, ctx: config.ctx})
-    // setResolution.init()
-    
-    // can.style.width = w + "px";
-    // can.style.height = h + "px";
-
-      //const mouse = new MouseEvent(canvas)
-    
-    
-    // const ballRadius = 20
     const paddleHeight = 10
     const paddleWidth = 75
     const paddleX = (cw - paddleWidth) / 2
